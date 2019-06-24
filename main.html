@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Move Test</title>
+</head>
+
+<body>
+    <div id="alert_rotate_layout">
+        <h1>Please Rotate Your Phone to Left!</h1>
+    </div>
+
+    <div id="move_ctr_area">
+        <!--移动控制区(左）-->
+        <div id="move_dpad">
+            <button ontouchstart="send_ord(1)" ontouchend="send_ord(0)" class="up">Up</button>
+            <button ontouchstart="send_ord(3)" ontouchend="send_ord(0)" class="left">Left</button>
+            <button ontouchstart="send_ord(4)" ontouchend="send_ord(0)" class="right">Right</button>
+            <button ontouchstart="send_ord(2)" ontouchend="send_ord(0)" class="down">Down</button>
+        </div>
+        <button ontouchstart="Lasing(2)" ontouchend="Lasing(3)">Lasing</button>
+    </div>
+
+    <div id="center_info">
+        <div id="video_dsp_area">
+            <!--视频显示区-->
+            <img id="ov_stream" src="http://192.168.2.138:8080/?action=stream">
+        </div>
+        <p id="sta">Offline</p>
+        <p id="volt">X.XX V</p>
+        <p id="cam_pos">cam x=75,y=110</p>
+        <input type="range" id="slider1" min="80" max="255" step="1" value="80" style="margin-left:20px;">
+    </div>
+
+    <div id="cam_ctr_area">
+        <!--摄像头移动控制区（右）-->
+        <div id="cam_dpad">
+            <button ontouchstart="cam_change(-2,0,1)" ontouchend="cam_change(0,0,0)" class="up">Up</button>
+            <button ontouchstart="cam_change(0,2,1)" ontouchend="cam_change(0,0,0)" class="left">Left</button>
+            <button ontouchstart="cam_change(0,0,2)" class="center">Center</button>
+            <button ontouchstart="cam_change(0,-2,1)" ontouchend="cam_change(0,0,0)" class="right">Right</button>
+            <button ontouchstart="cam_change(2,0,1)" ontouchend="cam_change(0,0,0)" class="down">Down</button>
+        </div>
+        <button ontouchstart="Lasing(1)" ontouchend="Lasing(3)">Aim</button>
+    </div>
+
+</body>
+
+</html>

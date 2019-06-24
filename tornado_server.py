@@ -7,7 +7,7 @@ from tornado.ioloop import IOLoop
 
 class IndexHandler(RequestHandler):  #返回控制页面
     def get(self):
-        self.render("ws.html")
+        self.render("main.html")
 
 class wsHandler(WebSocketHandler):   
     def open(self):
