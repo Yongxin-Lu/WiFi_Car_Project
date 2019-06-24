@@ -99,7 +99,7 @@
         var cam_Y = 110;
         volt_service=setInterval(function(){ws.send("@");},1000);
 
-        function Lasing(x){
+        function Lasing(x){  //激光发射指令发送
             switch(x){
                 case 1:
                     Lasing_send=setInterval(function(){ws.send("*!1\r\n")},35);
