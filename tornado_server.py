@@ -1,6 +1,5 @@
 import serial
 import tornado.web
-import _thread
 
 from tornado.web import RequestHandler
 from tornado.websocket import WebSocketHandler
@@ -14,10 +13,10 @@ class wsHandler(WebSocketHandler):
     def open(self):
         self.write_message("OK")
     def on_message(self,message):
-        if message.find("#")==0:
+        if message.find("#")==0 or message.find("$"):
             message+="\r\n"
             ser.write(message.encode("utf-8"))
-            #print(message)
+            #print(message)         
         elif message.find("@")==0:
             count=ser.inWaiting()
             recv=ser.read(count)
