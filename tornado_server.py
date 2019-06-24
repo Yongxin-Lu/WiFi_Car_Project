@@ -13,7 +13,7 @@ class wsHandler(WebSocketHandler):
     def open(self):
         self.write_message("OK")
     def on_message(self,message):
-        if message.find("#")==0 or message.find("$"):
+        if message.find("#")==0 or message.find("$")==0:
             message+="\r\n"
             ser.write(message.encode("utf-8"))
             #print(message)         
