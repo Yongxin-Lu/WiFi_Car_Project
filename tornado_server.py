@@ -21,7 +21,7 @@ class wsHandler(WebSocketHandler):
         elif message.find("@")==0:
             count=ser.inWaiting()
             recv=ser.read(count)
-            print(recv)
+            self.write_message("@"+bytes.decode(recv)[0:3])
             ser.flushInput
 
 
