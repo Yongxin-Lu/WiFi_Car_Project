@@ -72,6 +72,7 @@
         <button ontouchstart="send_ord(2)" ontouchend="send_ord(0)" class="down">Down</button>
         <input type="range" id="slider1" min="80" max="255" step="1" value="80" style="margin-left:20px;">
         <p id="sta">Offline</p>
+        <p id="volt">X.XX V</p>
         <p id="cam_pos">cam x=75,y=110</p>
     </div>
 
@@ -93,6 +94,7 @@
         var ms_send;
         var cam_X = 75;   //定义摄像头初始位置（回中)
         var cam_Y = 110;
+        volt_service=setInterval(function(){ws.send("@");},1000);
 
         function send_ord(order) {  //启动周期发送电机移动指令函数
             if (order != 0) {
@@ -173,7 +175,12 @@
         ws.onmessage = function (evt) {
             if (evt.data == "OK") {
                 document.getElementById("sta").innerHTML = "Connected!";
+            }else if(evt.data.substring(0,1)=="@"){
+                volt_value = parseInt(evt.data.substring(1,4));
+                volt_value=(volt_value*0.024).toFixed(2);
+                document.getElementById("volt").innerHTML=volt_value+"V / "+(volt_value/3).toFixed(2)+"V";
             }
+
         }
 
         window.onload = function () {           //事件监听
