@@ -79,6 +79,8 @@
     <div id="video_dsp_area">
         <!--视频显示区-->
         <img id="ov_stream" src="http://192.168.2.138:8080/?action=stream">
+        <button ontouchstart="Lasing(1)" ontouchend="Lasing(3)">Aim</button>
+        <button ontouchstart="Lasing(2)" ontouchend="Lasing(3)">Lasing</button>
     </div>
 
     <div id="cam_ctr_area">
@@ -92,9 +94,26 @@
 
     <script>
         var ms_send;
+        var Lasing_send;
         var cam_X = 75;   //定义摄像头初始位置（回中)
         var cam_Y = 110;
         volt_service=setInterval(function(){ws.send("@");},1000);
+
+        function Lasing(x){
+            switch(x){
+                case 1:
+                    Lasing_send=setInterval(function(){ws.send("*!1\r\n")},35);
+                    break;
+                case 2:
+                    Lasing_send=setInterval(function(){ws.send("*!2\r\n")},35);
+                    break;
+                case 3:
+                    clearInterval(Lasing_send);
+                    ws.send("*!3");
+                break;
+
+            }
+        }
 
         function send_ord(order) {  //启动周期发送电机移动指令函数
             if (order != 0) {

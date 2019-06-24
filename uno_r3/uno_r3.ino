@@ -3,6 +3,7 @@
 #include <Servo.h>
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
+Adafruit_DCMotor *laser = AFMS.getMotor(1);  //激光器
 Adafruit_DCMotor *mM1 = AFMS.getMotor(3);  //DC电机1
 Adafruit_DCMotor *mM2 = AFMS.getMotor(4);  //DC电机2
 
@@ -11,7 +12,8 @@ Servo servo_Y,servo_X;
 String inputString = "";  //串口指令暂存
 bool stringComplete = false;  //指令传输完成标志
 unsigned long lastTime=0;  //储存上次收到指令的时间
-unsigned long lastSendTime=0; //储存上次发送指令时间
+unsigned long lastSendVoltTime=0; //储存上次发送电压时间
+unsigned long lastLasing=0;  //储存上次收到激光发射指令时间
 int voltValue;  //储存测量的电池供电电压
 
 void setup() {
@@ -36,10 +38,15 @@ void loop() {
     mM2->run(RELEASE);
   }
 
-  if(currentTime-lastSendTime>=1000){   //每1秒发送一次供电电压（原始测量值)
+  if(currentTime-lastLasing>=50){  //超过50毫秒未收到指令，激光停止
+    laser->run(RELEASE);
+    laser->setSpeed(0);
+  }
+
+  if(currentTime-lastSendVoltTime>=1000){   //每1秒发送一次供电电压（原始测量值)
     voltValue=analogRead(15);
     Serial.println(voltValue);
-    lastSendTime=millis();
+    lastSendVoltTime=millis();
   }
       
   if (stringComplete) {   
@@ -58,12 +65,26 @@ void loop() {
         case 'B': mM2->run(BACKWARD);break;
         case 'R': mM2->run(RELEASE);break;        
       }
-      lastTime=millis();  //储存最后收到指令时间 
-             
+      lastTime=millis();  //储存最后收到指令时间
+
     }else if(inputString.startsWith("$")){     //舵机控制指令格式示例“$090090”
         servo_Y.write(inputString.substring(1,4).toInt());
         servo_X.write(inputString.substring(4,7).toInt());
+
+    }else if(inputString.startsWith("*")){  //激光指令示例“ *!1 ”，1代表瞄准，2全负荷，3停止
+        if(inputString.charAt(2)=="1"){
+          laser->setSpeed(50);
+          laser->run(FORWARD);
+        }else if(inputString.charAt(2)=="2"){
+          laser->setSpeed(255);
+          laser->run(FORWARD);
+        }else if(inputString.charAt(2)=="3"){
+          laser->run(RELEASE);
+          laser->setSpeed(0);
+        }
+        lastLasing=millis();
     }
+
     inputString = "";  //清空暂存指令
     stringComplete = false;
   }
