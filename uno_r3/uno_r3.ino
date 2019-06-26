@@ -50,7 +50,7 @@ void loop() {
   }
       
   if (stringComplete) {   
-    if(inputString.startsWith("#")){    //DC电机控制指令格式示例“#F220B110"，F前进，B后退，R停止
+    if(inputString.startsWith("#")){    //DC电机控制指令格式“#F220B110"，F前进，B后退，R停止
       
       mM1->setSpeed(inputString.substring(2,5).toInt());  //分离指令中的速度参数
       mM2->setSpeed(inputString.substring(6,9).toInt());
@@ -67,13 +67,13 @@ void loop() {
       }
       lastTime=millis();  //储存最后收到指令时间
 
-    }else if(inputString.startsWith("$")){     //舵机控制指令格式示例“$090090”
+    }else if(inputString.startsWith("$")){     //舵机控制指令格式“$090090”
         servo_Y.write(inputString.substring(1,4).toInt());
         servo_X.write(inputString.substring(4,7).toInt());
 
-    }else if(inputString.startsWith("*")){  //激光指令示例“ *!1 ”，1代表瞄准，2全负荷，3停止
+    }else if(inputString.startsWith("*")){  //激光指令示例“ *!1 ”，1低功率，2全负荷，3停止
         if(inputString.substring(2,3)=="1"){
-          laser->setSpeed(50);
+          laser->setSpeed(30);
           laser->run(FORWARD);
         }else if(inputString.substring(2,3)=="2"){
           laser->setSpeed(255);
@@ -90,7 +90,7 @@ void loop() {
   }
 }
 
-//串口中断服务程序，接受小车控制指令
+//串口中断程序
 void serialEvent() {
   while(Serial.available()) {
     char inChar = (char)Serial.read();

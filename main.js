@@ -22,7 +22,7 @@ function Lasing(x) {  //激光发射指令发送
 
 function send_ord(order) {  //启动周期发送电机移动指令函数
     if (order != 0) {
-        ms_send = setInterval(function () { send(order) }, 20);
+        ms_send = setInterval(function () { send(order) }, 15);
     } else {
         clearInterval(ms_send);
         send(0);
