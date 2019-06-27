@@ -2,48 +2,395 @@
 <html>
 
 <head>
-    <title>Night Vison</title>
+    <title>Night Vision</title>
+    <style>
+        * {
+            -webkit-user-select: none;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle farthest-side at center center, rgb(220, 220, 220), white 50%, rgb(240, 240, 240));
+        }
+
+        #mask {
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            background-color: white;
+        }
+
+        #mask h1 {
+            text-align: center;
+            margin-top: 200px;
+        }
+
+        /************************  左侧样式  ***********************/
+        #left_side {
+            float: left;
+            width: 26%;
+            height: 100%;
+        }
+
+        #left_side button {
+            display: block;
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+            background-color: rgb(190, 190, 190);
+            color: white;
+            border: 1px solid rgb(170, 170, 170);
+        }
+
+        #move_up,
+        #move_down {
+            margin: auto auto;
+            clear: both;
+        }
+
+        #move_up {
+            margin-top: 15px;
+        }
+
+        #move_left {
+            float: left;
+            margin-left: 18px;
+        }
+
+        #move_right {
+            float: right;
+            margin-right: 18px;
+        }
+
+        #la_button {
+            display: block;
+            margin: 60px auto;
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+            color: white;
+        }
+
+        /************************  中部样式  ***********************/
+        #center_side {
+            float: left;
+            width: 47%;
+            height: 100%;
+        }
+
+        #video_display {
+            width: 100%;
+            height: 64%;
+            background-color: gray;
+        }
+
+        #video_display h1 {
+            color: white;
+            text-align: center;
+            padding-top: 130px;
+            margin-top: 0px;
+            font-style: italic;
+        }
+
+        #sta_bar {
+            width: 100%;
+            height: 10%;
+        }
+
+        #sta {
+            float: left;
+            margin-left: 10px;
+        }
+
+        #volt {
+            float: right;
+            margin-right: 10px;
+        }
+
+        #thro_slider {
+            width: 100%;
+            height: 20%;
+        }
+
+        #thro_slider input {
+            display: block;
+            margin: 32px auto;
+            width: 70%;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            height: 10px;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px rgb(180, 180, 180), inset 0 .125em .125em gray;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 40px;
+            width: 25px;
+            margin-top: -13px;
+            background-color: rgb(190, 190, 190);
+            border-radius: 6;
+            border: 1px solid rgb(170, 170, 170);
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        /************************   右侧样式   ***********************/
+        #right_side {
+            float: left;
+            width: 26%;
+            height: 100%;
+        }
+
+        #right_side button {
+            display: block;
+            background-color: rgb(190, 190, 190);
+            color: white;
+            border: 1px solid rgb(170, 170, 170);
+        }
+
+        #cam_ctr {
+            float: left;
+            clear: right;
+            width: 100%;
+            margin-bottom: 35px;
+        }
+
+        #cam_video,
+        #cam_center {
+            float: left;
+            width: 36%;
+            height: 50px;
+            border-radius: 10%;
+            margin-left: 10%;
+            margin-top: 15px;
+        }
+
+        #aim_button {
+            display: block;
+            margin: auto auto;
+            margin-bottom: 30px;
+            width: 100px;
+            height: 100px;
+            color: white;
+            border: 1px solid green;
+        }
+
+        #cam_up,
+        #cam_left,
+        #cam_right,
+        #cam_down {
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+        }
+
+        #cam_up,
+        #cam_down {
+            clear: both;
+            margin: auto auto;
+        }
+
+        #cam_left {
+            float: left;
+            margin-left: 18px;
+        }
+
+        #cam_right {
+            float: right;
+            margin-right: 18px;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="alert_rotate_layout">
-        <h1>Please Rotate Your Phone to Left!</h1>
+    <div id="left_side">
+        <button ontouchstart="send_ord(1)" ontouchend="send_ord(0)" id="move_up">Up</button>
+        <button ontouchstart="send_ord(3)" ontouchend="send_ord(0)" id="move_left">Left</button>
+        <button ontouchstart="send_ord(4)" ontouchend="send_ord(0)" id="move_right">Right</button>
+        <button ontouchstart="send_ord(2)" ontouchend="send_ord(0)" id="move_down">Down</button>
+        <button ontouchstart="Lasing(2)" ontouchend="Lasing(3)" id="la_button"
+            style="border-radius: 10%;background-color: red;">LA</button>
     </div>
 
-    <div id="move_ctr_area">
-        <!--移动控制区(左）-->
-        <div id="move_dpad">
-            <button ontouchstart="send_ord(1)" ontouchend="send_ord(0)" class="up">Up</button>
-            <button ontouchstart="send_ord(3)" ontouchend="send_ord(0)" class="left">Left</button>
-            <button ontouchstart="send_ord(4)" ontouchend="send_ord(0)" class="right">Right</button>
-            <button ontouchstart="send_ord(2)" ontouchend="send_ord(0)" class="down">Down</button>
+    <div id="center_side">
+        <div id="video_display">
+            <h1>Night Vision</h1>
         </div>
-        <button ontouchstart="Lasing(2)" ontouchend="Lasing(3)">Lasing</button>
-    </div>
-
-    <div id="center_info">
-        <div id="video_dsp_area">
-            <!--视频显示区-->
-            <img id="ov_stream" src="http://192.168.2.138:8080/?action=stream">
+        <div id="sta_bar">
+            <p id="sta">Status: offline</p>
+            <p id="volt">Volt: X.XX V</p>
         </div>
-        <p id="sta">Offline</p>
-        <p id="volt">X.XX V</p>
-        <p id="cam_pos">cam x=75,y=110</p>
-        <input type="range" id="slider1" min="80" max="255" step="1" value="80" style="margin-left:20px;">
+        <div id="thro_slider"><input type="range" min="80" max="255" step="1" value="80"></div>
     </div>
 
-    <div id="cam_ctr_area">
-        <!--摄像头移动控制区（右）-->
-        <div id="cam_dpad">
-            <button ontouchstart="cam_change(-1,0,1)" ontouchend="cam_change(0,0,0)" class="up">Up</button>
-            <button ontouchstart="cam_change(0,1,1)" ontouchend="cam_change(0,0,0)" class="left">Left</button>
-            <button ontouchstart="cam_change(0,0,2)" class="center">Center</button>
-            <button ontouchstart="cam_change(0,-1,1)" ontouchend="cam_change(0,0,0)" class="right">Right</button>
-            <button ontouchstart="cam_change(1,0,1)" ontouchend="cam_change(0,0,0)" class="down">Down</button>
+    <div id="right_side">
+        <div id="cam_ctr">
+            <button id="cam_video">Video</button>
+            <button ontouchstart="cam_change(0,0,2)" id="cam_center">Center</button>
         </div>
-        <button ontouchstart="Lasing(1)" ontouchend="Lasing(3)">Aim</button>
+        <button ontouchstart="Lasing(1)" ontouchend="Lasing(3)" id="aim_button"
+            style="border-radius: 10%;background-color: green;">AIM</button>
+        <button ontouchstart="cam_change(-1,0,1)" ontouchend="cam_change(0,0,0)" id="cam_up">Up</button>
+        <button ontouchstart="cam_change(0,1,1)" ontouchend="cam_change(0,0,0)" id="cam_left">Left</button>
+        <button ontouchstart="cam_change(0,-1,1)" ontouchend="cam_change(0,0,0)" id="cam_right">Right</button>
+        <button ontouchstart="cam_change(1,0,1)" ontouchend="cam_change(0,0,0)" id="cam_down">Down</button>
     </div>
 
+    <div id="mask">
+        <h1>&lt;&lt; Please Rotate Your Phone to Left/Right &gt;&gt;</h1>
+    </div>
+
+    <script>
+        var ms_send;
+        var Lasing_send;
+        var cam_X = 75;   //定义摄像头初始位置（回中)
+        var cam_Y = 110;
+        volt_service = setInterval(function () { ws.send("@"); }, 1000);
+
+        function Lasing(x) {  //激光发射指令发送
+            switch (x) {
+                case 1:
+                    Lasing_send = setInterval(function () { ws.send("*!1\r\n") }, 35);
+                    break;
+                case 2:
+                    Lasing_send = setInterval(function () { ws.send("*!2\r\n") }, 35);
+                    break;
+                case 3:
+                    clearInterval(Lasing_send);
+                    ws.send("*!3");
+                    break;
+
+            }
+        }
+
+        function send_ord(order) {  //启动周期发送电机移动指令函数
+            if (order != 0) {
+                ms_send = setInterval(function () { send(order) }, 15);
+            } else {
+                clearInterval(ms_send);
+                send(0);
+            }
+        }
+
+        function send(order) {   //电机移动指令发送函数
+            var speed = getSpeed();
+            switch (order) {
+                case 0:
+                    ws.send("#R000R000");
+                    break;
+                case 1:
+                    ws.send("#F" + speed + "F" + speed);
+                    break;
+                case 2:
+                    ws.send("#B" + speed + "B" + speed);
+                    break;
+                case 3:
+                    ws.send("#B110F110");    //转向速度110
+                    break;
+                case 4:
+                    ws.send("#F110B110");
+                    break;
+            }
+        }
+
+        function cam_change(y, x, z) {
+            switch (z) {  //启动周期发送摄像头移动指令函数
+                case 1:
+                    ms_send = setInterval(function () { cam_move(y, x) }, 35);
+                    break;
+                case 0:
+                    clearInterval(ms_send);
+                    break;
+                case 2:
+                    ws.send("$110075\r\n");
+                    cam_X = 75;
+                    cam_Y = 110;
+                    document.getElementById("cam_pos").innerHTML = "cam x=75,y=110";
+                    break;
+            }
+        }
+
+        function cam_move(y_arg, x_arg) {  //摄像头舵机移动指令发送函数
+            var x = cam_X + x_arg;
+            var y = cam_Y + y_arg;
+            if (x < 0) {
+                cam_X = 0;
+            } else if (x > 180) {
+                cam_X = 180;
+            } else {
+                cam_X = x;
+            }
+            x = ("00" + cam_X).substring(cam_X.toString().length - 1);
+            if (y < 20) {
+                cam_Y = 20;
+            } else if (y > 180) {
+                cam_Y = 180;
+            } else {
+                cam_Y = y;
+            }
+            y = ("0" + cam_Y).substring(cam_Y.toString().length - 2);
+            ws.send("$" + y + x + "\r\n");
+            document.getElementById("cam_pos").innerHTML = "cam x=" + cam_X + ",y=" + cam_Y;
+        }
+
+        function getSpeed() {  //获取滑动条数值作为“油门"
+            var speed = document.getElementById("slider1").value;
+            return ("0" + speed).substring(speed.length - 2);
+        }
+
+        var ws = new WebSocket("ws://192.168.2.138:8081/ws");  //与服务器建立Web Socket连接
+        ws.onmessage = function (evt) {
+            if (evt.data == "OK") {
+                document.getElementById("sta").innerHTML = "Connected!";
+            } else if (evt.data.substring(0, 1) == "@") {
+                volt_value = parseInt(evt.data.substring(1, 4));
+                volt_value = (volt_value * 0.024).toFixed(2);
+                document.getElementById("volt").innerHTML = volt_value + "V / " + (volt_value / 3).toFixed(2) + "V";
+            }
+
+        }
+
+        window.onload = function () {           //事件监听
+            window.addEventListener('touchstart', function (event) {   //禁止双击放大
+                if (event.touches.length > 1) {
+                    event.preventDefault();
+                }
+            });
+            var lastTouchEnd = 0;
+            window.addEventListener('touchend', function (event) {
+                var now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+            window.addEventListener('gesturestart', function (event) {  //禁止手势放大
+                event.preventDefault();
+            });
+            window.addEventListener("orientationchange", function () {  //横竖屏监听
+                if (window.orientation == 0) {
+                    document.getElementById("alert_rotate_layout").style.display = "";
+                } else {
+                    document.getElementById("alert_rotate_layout").style.display = "none";
+                }
+            }, false);
+        }
+    </script>
 </body>
 
 </html>
