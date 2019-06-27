@@ -62,7 +62,7 @@
             color: white;
             border: 1px solid rgb(170, 170, 170);
             box-shadow: 0 0 10px #999;
-            font-size: 1.0rem;
+            font-size: 1.2rem;
         }
 
         #move_up,
@@ -73,16 +73,21 @@
 
         #move_up {
             margin-top: 15px;
+            -webkit-transform: rotate(-90deg);
         }
 
         #move_left {
             float: left;
             margin-left: 18px;
+            -webkit-transform: rotate(-180deg);
         }
 
         #move_right {
             float: right;
             margin-right: 18px;
+        }
+        #move_down{
+            -webkit-transform: rotate(90deg);
         }
 
         #la_button {
@@ -189,7 +194,7 @@
             color: white;
             border: 1px solid rgb(170, 170, 170);
             box-shadow: 0 0 10px #999;
-            font-size: 1.0rem;
+            font-size: 1.2rem;
         }
 
         #cam_ctr {
@@ -238,21 +243,28 @@
         #cam_left {
             float: left;
             margin-left: 25px;
+            -webkit-transform: rotate(-180deg);
         }
 
         #cam_right {
             float: right;
             margin-right: 15px;
         }
+        #cam_up{
+            -webkit-transform: rotate(-90deg);
+        }
+        #cam_down{
+            -webkit-transform: rotate(90deg);
+        }
     </style>
 </head>
 
 <body>
     <div id="left_side">
-        <button ontouchstart="send_ord(1)" ontouchend="send_ord(0)" id="move_up">Up</button>
-        <button ontouchstart="send_ord(3)" ontouchend="send_ord(0)" id="move_left">Left</button>
-        <button ontouchstart="send_ord(4)" ontouchend="send_ord(0)" id="move_right">Right</button>
-        <button ontouchstart="send_ord(2)" ontouchend="send_ord(0)" id="move_down">Down</button>
+        <button ontouchstart="send_ord(1)" ontouchend="send_ord(0)" id="move_up">></button>
+        <button ontouchstart="send_ord(3)" ontouchend="send_ord(0)" id="move_left">></button>
+        <button ontouchstart="send_ord(4)" ontouchend="send_ord(0)" id="move_right">></button>
+        <button ontouchstart="send_ord(2)" ontouchend="send_ord(0)" id="move_down">></button>
         <button ontouchstart="Lasing(2)" ontouchend="Lasing(3)" id="la_button"
             style="border-radius: 10%;background-color: red;">LA</button>
     </div>
@@ -275,10 +287,10 @@
         </div>
         <button ontouchstart="Lasing(1)" ontouchend="Lasing(3)" id="aim_button"
             style="border-radius: 10%;background-color:#52c321;">AIM</button>
-        <button ontouchstart="cam_change(-1,0,1)" ontouchend="cam_change(0,0,0)" id="cam_up">Up</button>
-        <button ontouchstart="cam_change(0,1,1)" ontouchend="cam_change(0,0,0)" id="cam_left">Left</button>
-        <button ontouchstart="cam_change(0,-1,1)" ontouchend="cam_change(0,0,0)" id="cam_right">Right</button>
-        <button ontouchstart="cam_change(1,0,1)" ontouchend="cam_change(0,0,0)" id="cam_down">Down</button>
+        <button ontouchstart="cam_change(-1,0,1)" ontouchend="cam_change(0,0,0)" id="cam_up">></button>
+        <button ontouchstart="cam_change(0,1,1)" ontouchend="cam_change(0,0,0)" id="cam_left">></button>
+        <button ontouchstart="cam_change(0,-1,1)" ontouchend="cam_change(0,0,0)" id="cam_right">></button>
+        <button ontouchstart="cam_change(1,0,1)" ontouchend="cam_change(0,0,0)" id="cam_down">></button>
     </div>
 
     <div id="mask">
