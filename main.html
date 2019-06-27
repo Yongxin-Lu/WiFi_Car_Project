@@ -3,6 +3,18 @@
 
 <head>
     <title>Night Vision</title>
+    <!-- 强制显示方式 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- 允许全屏模式浏览 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- 定义safari顶端状态条的样式 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- 开启WEB APP 支持 -->
+    <meta name="apple-touch-fullscreen" content="yes">
+    <!-- WEB APP名称 -->
+    <meta name="apple-mobile-web-app-title" content="Night Vison">
+    <!-- 隐藏顶部 -->
+    <meta name="viewport" content="minimal-ui">
     <style>
         * {
             -webkit-user-select: none;
@@ -15,6 +27,7 @@
             margin: 0;
             padding: 0;
             background: rgb(240, 240, 240);
+            position: fixed;
         }
 
         #mask {
@@ -49,6 +62,7 @@
             color: white;
             border: 1px solid rgb(170, 170, 170);
             box-shadow: 0 0 10px #999;
+            font-size: 1.0rem;
         }
 
         #move_up,
@@ -78,6 +92,7 @@
             height: 100px;
             border: 1px solid red;
             color: white;
+            font-size: 20px;
         }
 
         /************************  中部样式  ***********************/
@@ -99,31 +114,40 @@
             padding-top: 130px;
             margin-top: 0px;
             font-style: italic;
+            font-family: '黑体';
         }
 
         #sta_bar {
             width: 100%;
             height: 10%;
+            font-size: 1.3rem;
+            color:white;
+            background-color:rgb(170, 170, 170);
+            border-radius: 0 0 10px 10px;
+            line-height: 100%;
         }
 
         #sta {
             float: left;
-            margin-left: 10px;
+            margin-left: 13px;
+            margin-bottom: 0px;
         }
 
         #volt {
             float: right;
-            margin-right: 10px;
+            margin-right: 13px;
+            margin-bottom: 0px;
         }
 
         #thro_slider {
             width: 100%;
-            height: 20%;
+            height: 26%;
+            float: left;
         }
 
         #thro_slider input {
             display: block;
-            margin: 32px auto;
+            margin:50px auto;
             width: 70%;
         }
 
@@ -165,6 +189,7 @@
             color: white;
             border: 1px solid rgb(170, 170, 170);
             box-shadow: 0 0 10px #999;
+            font-size: 1.0rem;
         }
 
         #cam_ctr {
@@ -192,6 +217,7 @@
             height: 100px;
             color: white;
             border: 1px solid green;
+            font-size: 20px;
         }
 
         #cam_up,
@@ -211,12 +237,12 @@
 
         #cam_left {
             float: left;
-            margin-left: 18px;
+            margin-left: 25px;
         }
 
         #cam_right {
             float: right;
-            margin-right: 18px;
+            margin-right: 15px;
         }
     </style>
 </head>
@@ -239,7 +265,7 @@
             <p id="sta">Status: offline</p>
             <p id="volt">Volt: x.xx v / x.xx v</p>
         </div>
-        <div id="thro_slider"><input type="range" min="80" max="255" step="1" value="80"></div>
+        <div id="thro_slider"><input type="range" min="80" max="255" step="1" value="80" id="thro"></div>
     </div>
 
     <div id="right_side">
@@ -248,7 +274,7 @@
             <button ontouchstart="cam_change(0,0,2)" id="cam_center">Center</button>
         </div>
         <button ontouchstart="Lasing(1)" ontouchend="Lasing(3)" id="aim_button"
-            style="border-radius: 10%;background-color: green;">AIM</button>
+            style="border-radius: 10%;background-color:#52c321;">AIM</button>
         <button ontouchstart="cam_change(-1,0,1)" ontouchend="cam_change(0,0,0)" id="cam_up">Up</button>
         <button ontouchstart="cam_change(0,1,1)" ontouchend="cam_change(0,0,0)" id="cam_left">Left</button>
         <button ontouchstart="cam_change(0,-1,1)" ontouchend="cam_change(0,0,0)" id="cam_right">Right</button>
@@ -324,7 +350,6 @@
                     ws.send("$110075\r\n");
                     cam_X = 75;
                     cam_Y = 110;
-                    document.getElementById("cam_pos").innerHTML = "cam x=75,y=110";
                     break;
             }
         }
@@ -349,11 +374,10 @@
             }
             y = ("0" + cam_Y).substring(cam_Y.toString().length - 2);
             ws.send("$" + y + x + "\r\n");
-            document.getElementById("cam_pos").innerHTML = "cam x=" + cam_X + ",y=" + cam_Y;
         }
 
         function getSpeed() {  //获取滑动条数值作为“油门"
-            var speed = document.getElementById("slider1").value;
+            var speed = document.getElementById("thro").value;
             return ("0" + speed).substring(speed.length - 2);
         }
 
@@ -364,7 +388,7 @@
             } else if (evt.data.substring(0, 1) == "@") {
                 volt_value = parseInt(evt.data.substring(1, 4));
                 volt_value = (volt_value * 0.024).toFixed(2);
-                document.getElementById("volt").innerHTML ="Volt: "+volt_value + "V / " + (volt_value / 3).toFixed(2) + "V";
+                document.getElementById("volt").innerHTML = "Volt: " + volt_value + "V / " + (volt_value / 3).toFixed(2) + "V";
             }
 
         }
