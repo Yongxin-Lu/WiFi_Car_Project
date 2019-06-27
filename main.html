@@ -237,7 +237,7 @@
         </div>
         <div id="sta_bar">
             <p id="sta">Status: offline</p>
-            <p id="volt">Volt: X.XX V</p>
+            <p id="volt">Volt: x.xx v / x.xx v</p>
         </div>
         <div id="thro_slider"><input type="range" min="80" max="255" step="1" value="80"></div>
     </div>
@@ -360,11 +360,11 @@
         var ws = new WebSocket("ws://192.168.2.138:8081/ws");  //与服务器建立Web Socket连接
         ws.onmessage = function (evt) {
             if (evt.data == "OK") {
-                document.getElementById("sta").innerHTML = "Connected!";
+                document.getElementById("sta").innerHTML = "Status: connected";
             } else if (evt.data.substring(0, 1) == "@") {
                 volt_value = parseInt(evt.data.substring(1, 4));
                 volt_value = (volt_value * 0.024).toFixed(2);
-                document.getElementById("volt").innerHTML = volt_value + "V / " + (volt_value / 3).toFixed(2) + "V";
+                document.getElementById("volt").innerHTML ="Volt: "+volt_value + "V / " + (volt_value / 3).toFixed(2) + "V";
             }
 
         }
