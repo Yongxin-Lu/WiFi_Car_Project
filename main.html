@@ -14,7 +14,7 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            background: radial-gradient(circle farthest-side at center center, rgb(220, 220, 220), white 50%, rgb(240, 240, 240));
+            background: rgb(240, 240, 240);
         }
 
         #mask {
@@ -388,9 +388,9 @@
             });
             window.addEventListener("orientationchange", function () {  //横竖屏监听
                 if (window.orientation == 0) {
-                    document.getElementById("alert_rotate_layout").style.display = "";
+                    document.getElementById("mask").style.display = "";
                 } else {
-                    document.getElementById("alert_rotate_layout").style.display = "none";
+                    document.getElementById("mask").style.display = "none";
                 }
             }, false);
         }
