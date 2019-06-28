@@ -73,7 +73,7 @@ void loop() {
 
     }else if(inputString.startsWith("*")){  //激光指令示例“ *!1 ”，1低功率，2全负荷，3停止
         if(inputString.substring(2,3)=="1"){
-          laser->setSpeed(30);
+          laser->setSpeed(20);
           laser->run(FORWARD);
         }else if(inputString.substring(2,3)=="2"){
           laser->setSpeed(255);
