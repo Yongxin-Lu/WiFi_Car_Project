@@ -71,14 +71,14 @@ void loop() {
         servo_Y.write(inputString.substring(1,4).toInt());
         servo_X.write(inputString.substring(4,7).toInt());
 
-    }else if(inputString.startsWith("*")){  //激光指令示例“ *!1 ”，1低功率，2全负荷，3停止
-        if(inputString.substring(2,3)=="1"){
+    }else if(inputString.startsWith("*")){  //激光指令示例“ *!1 ”
+        if(inputString.substring(2,3)=="1"){       //1低功率
           laser->setSpeed(20);
           laser->run(FORWARD);
-        }else if(inputString.substring(2,3)=="2"){
+        }else if(inputString.substring(2,3)=="2"){  //2全负荷
           laser->setSpeed(255);
           laser->run(FORWARD);
-        }else if(inputString.substring(2,3)=="3"){
+        }else if(inputString.substring(2,3)=="3"){   //3停止
           laser->run(RELEASE);
           laser->setSpeed(0);
         }
