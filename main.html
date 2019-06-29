@@ -383,8 +383,8 @@
                 cam_X = x;
             }
             x = ("00" + cam_X).substring(cam_X.toString().length - 1);
-            if (y < 20) {
-                cam_Y = 20;
+            if (y < 30) {                 //限制Y轴最小30度
+                cam_Y = 30;
             } else if (y > 180) {
                 cam_Y = 180;
             } else {
