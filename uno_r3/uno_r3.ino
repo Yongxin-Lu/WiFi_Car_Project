@@ -26,7 +26,7 @@ void setup() {
   servo_Y.attach(10);    //舵机1-Y轴占用10脚
   servo_X.attach(9);    //舵机2-X轴占用9脚
   
-  servo_Y.write(110);   //初始化舵机角度，回中X轴75°，Y轴110，Y轴极限20°-160°，X轴无限制
+  servo_Y.write(110);   //初始化舵机角度，回中X轴75°，Y轴110，Y轴极限33°-160°，X轴无限制
   servo_X.write(75);
 }
 
